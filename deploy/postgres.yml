@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:13.0-alpine
+    container_name: psg_demo
+    environment:
+      POSTGRES_DB: bardiadb
+      POSTGRES_USER: bardia
+      POSTGRES_PASSWORD: bardiapw
+    ports:
+      - 5432:5432
