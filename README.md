@@ -49,12 +49,12 @@ vault secrets enable database
 ```
 #### Configure the postgresql plugin
 ```shell
-vault write database/config/cbiot \
+vault write database/config/bardiadb \
     plugin_name=postgresql-database-plugin \
-    allowed_roles="admin" \
-    connection_url="postgresql://{{username}}:{{password}}@localhost:5432/cbiot?sslmode=disable" \
-     username="admin" \
-     password="adminpw"
+    allowed_roles="bardia" \
+    connection_url="postgresql://{{username}}:{{password}}@localhost:5432/bardiadb?sslmode=disable" \
+     username="bardia" \
+     password="bardiapw"
 ```
 #### Configure a role to be used
 Now, let's create a Vault role that will manage the credential creation in both Vault & Postgres.
@@ -65,8 +65,8 @@ When creating a role, we supply:
 * Revocation statements: Vault will execute these commands against Postgres whenever the credentials have expired (TTL reached).
 * TTL (Time-To-Live) of the credentials. Once the credentials expire Vault will execute the Revokation statements and will remove the credentials from its storage.
 ```shell
- vault write database/roles/admin \
-    db_name="cbiot" \
+ vault write database/roles/bardia \
+    db_name="bardiadb" \
     creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
         GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
     default_ttl="1h" \
@@ -74,17 +74,17 @@ When creating a role, we supply:
 ```
 #### Generate credentials on the DB from the role
 ```shell
-vault read database/creds/admin
+vault read database/creds/bardia
 ```
 #### output
 ```shell
 Key                Value
 ---                -----
-lease_id           database/creds/admin/NeFeB5oqoiAzguF68xUCmhD6
+lease_id           database/creds/bardia/NeFeB5oqoiAzguF68xUCmhD6
 lease_duration     1h
 lease_renewable    true
 password           tiGyUy-it2pSZSLoLxt3
-username           v-root-admin-lMJOPHdemg2mr3QPWXnt-1665731759
+username           v-root-bardia-lMJOPHdemg2mr3QPWXnt-1665731759
 ```
 ## Web ui Vault
 ### secrets engines
@@ -98,6 +98,6 @@ username           v-root-admin-lMJOPHdemg2mr3QPWXnt-1665731759
 
 ## go run main.go
 ```
-Connected to PostgreSQL db using user <v-root-admin-OQZIsxFo71ytoXb3aIKo-1660475644> and password <4u-A74pocYWqzUaSqW5L>                                                                     │
+Connected to PostgreSQL db using user <v-root-bardia-OQZIsxFo71ytoXb3aIKo-1660475644> and password <4u-A74pocYWqzUaSqW5L>                                                                     │
 Listening on 127.0.0.1:4030
 ```
