@@ -1,0 +1,44 @@
+run:
+  deadline: 5m
+  tests: false
+  modules-download-mode: readonly
+
+linters:
+  enable-all: true
+  disable:
+    - varnamelen
+    - nilnil
+    - maintidx
+    - ireturn
+#    - errname
+#    - errchkjson
+    - contextcheck
+    - lll
+    - goerr113
+    - nestif
+    - funlen
+    - gci
+    - gofumpt
+    - goimports
+    - dupl
+    - godox
+    - gocognit
+    - gocyclo
+    - cyclop
+    - gomnd
+    - forcetypeassert
+    - tagliatelle
+    - revive
+    - interfacer
+    - scopelint
+    - golint
+    - maligned
+    - exhaustivestruct
+    - gochecknoglobals
+    - gocritic
+    - godot
+    - stylecheck
+    - govet
+    - staticcheck
+    - ineffassign
+    - wastedassign

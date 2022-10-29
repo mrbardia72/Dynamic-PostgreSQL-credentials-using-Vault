@@ -2,7 +2,7 @@ sleep 1
 echo '\e[0;34m ✅️******** secrets enable database ******** \e[0m'
 vault secrets enable database
 
-sleep 1
+sleep 2
 echo '\e[0;34m ✅️******** Configure the postgresql plugin ******** \e[0m'
 vault write database/config/bardiadb \
     plugin_name=postgresql-database-plugin \
@@ -11,7 +11,7 @@ vault write database/config/bardiadb \
      username="bardia" \
      password="bardiapw"
 
-sleep 1
+sleep 2
 echo '\e[0;34m ✅️******** Configure a role to be used ******** \e[0m'
  vault write database/roles/bardia \
     db_name="bardiadb" \
@@ -20,7 +20,7 @@ echo '\e[0;34m ✅️******** Configure a role to be used ******** \e[0m'
     default_ttl="1h" \
     max_ttl="24h"
 
-sleep 1
+sleep 2
 echo '\e[0;34m ✅️******** Generate credentials on the DB from the role ******** \e[0m'
 vault read database/creds/bardia
 

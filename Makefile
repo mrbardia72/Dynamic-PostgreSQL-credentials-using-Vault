@@ -1,5 +1,7 @@
-LOGFILE=$(LOGPATH) `date +'%A-%b-%d-%Y-TIME-%H-%M-%S'`
+LOGFILE=$(LOGPATH) `date +'%A-%b-%d-%Y'`
 branch := $(shell git branch --show-current)
+export ROOT=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+export GO111MODULE=on
 
 .PHONY: help
 help: ## Shows help
@@ -21,6 +23,22 @@ up-vault: ## docker-compose -f deploy/vault.yml up
 .PHONY: dn-vault
 dn-vault: ## docker-compose -f deploy/vault.yml down
 	docker-compose -f deploy/vault.yml down
+
+.which-go:
+	@which go > /dev/null || (echo "install go from https://golang.org/dl/" & exit 1)
+
+format: .which-go
+	gofmt -s -w $(ROOT)
+
+.which-lint:
+	@which golangci-lint > /dev/null || (echo "install golangci-lint from https://github.com/golangci/golangci-lint" & exit 1)
+
+lint: .which-lint
+	golangci-lint run
+
+clean: # run make format and make lint
+	gofmt -s -w $(ROOT)
+	golangci-lint run
 
 .PHONY: cm
 cm: ## 🌱 git commit
