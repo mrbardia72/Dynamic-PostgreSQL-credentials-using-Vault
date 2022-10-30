@@ -6,7 +6,7 @@ run:
 linters:
   enable-all: true
   disable:
-    - varnamelen
+#     - varnamelen
     - nilnil
     - maintidx
     - ireturn
