@@ -1,4 +1,4 @@
-name: My Workflow
+name: go vulncheck
 on: [push]
 jobs:
   build:
