@@ -1,0 +1,13 @@
+name: My Workflow
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Running govulncheck
+        uses: Templum/govulncheck-action@<version>
+        with:
+          go-version: 1.18
+          vulncheck-version: latest
+          package: ./...
