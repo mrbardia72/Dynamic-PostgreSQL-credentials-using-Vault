@@ -7,7 +7,7 @@ linters:
   enable-all: true
   disable:
 #     - varnamelen
-    - nilnil
+#     - nilnil
     - maintidx
     - ireturn
 #    - errname
