@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Running govulncheck
-        uses: Templum/govulncheck-action@<version>
+        uses: Templum/govulncheck-action@latest
         with:
           go-version: 1.18
           vulncheck-version: latest
