@@ -2,6 +2,7 @@ package respond
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -33,7 +34,8 @@ func Done(w http.ResponseWriter, _ *http.Request, rsp interface{}) {
 		}
 	}
 
-	_ = json.NewEncoder(w).Encode(rsp)
+	errEncode := json.NewEncoder(w).Encode(rsp)
+	log.Println(errEncode)
 }
 
 type WithStatusCreated struct{}

@@ -32,5 +32,4 @@ func (h *authorHandler) ListAuthors(w http.ResponseWriter, r *http.Request) {
 	respond.Done(w, r, Response{Results: res})
 
 	return
-
 }

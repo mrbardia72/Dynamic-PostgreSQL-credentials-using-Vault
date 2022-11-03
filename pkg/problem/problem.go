@@ -49,7 +49,7 @@ func (p Problem) MarshalJSON() ([]byte, error) {
 		}
 	}
 
-	return json.Marshal(c)
+	return json.Marshal(c) //nolint:wrapcheck
 }
 
 func (p Problem) StatusCode() int {

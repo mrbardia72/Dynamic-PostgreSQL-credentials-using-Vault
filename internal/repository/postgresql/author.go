@@ -19,6 +19,7 @@ func NewAuthorRepository(db *sql.DB) author.Repository {
 	return &authorRepo{db: db}
 }
 
+//List query from authors.
 func (repo *authorRepo) List(ctx context.Context) ([]author.Entity, error) {
 	//tx, err := repo.db.Begin()
 	//if err != nil {
@@ -36,7 +37,6 @@ func (repo *authorRepo) List(ctx context.Context) ([]author.Entity, error) {
 	//		}
 	//	}
 	//}()
-
 	rows, err := repo.db.QueryContext(ctx, queryList)
 	if err != nil {
 		return nil, errors.Wrap(err, "error on query list author")

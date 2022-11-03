@@ -42,7 +42,6 @@ func GetVaultConfig() DbConnection {
 		panic(errAtoi)
 	}
 
-	println(response.Data.Password, "\t\t", response.Data.User)
 	return DbConnection{
 		Dbname:   env.MustGetString("PGSQL_DB_NAME"),
 		Host:     env.MustGetString("PGSQL_HOST"),

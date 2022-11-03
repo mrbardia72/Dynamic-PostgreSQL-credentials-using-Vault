@@ -40,6 +40,11 @@ clean: # run make format and make lint
 	gofmt -s -w $(ROOT)
 	golangci-lint run
 
+.PHONY: test
+test: .which-go ## Tests go files
+	CGO_ENABLED=1 go test -race -coverprofile=coverage.txt -covermode=atomic $(ROOT)/... -v
+
+
 .PHONY: cm
 cm: ## 🌱 git commit
 	git add .

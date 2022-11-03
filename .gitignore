@@ -10,3 +10,6 @@ vendor/
 .env
 /.idea/
 /.vscode/
+/bin/
+/coverage.txt
+*.env

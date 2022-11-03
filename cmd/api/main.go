@@ -12,7 +12,6 @@ import (
 )
 
 func main() {
-
 	infoDB := cfg.GetPostgresqlConfig()
 	defer func() { _ = infoDB.Close() }()
 
@@ -28,5 +27,4 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("error on handle http requests: %s", err))
 	}
-
 }

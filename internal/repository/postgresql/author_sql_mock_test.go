@@ -24,17 +24,17 @@ func TestShouldUpdateStats(t *testing.T) {
 	repo := &authorRepo{db}
 	defer db.Close()
 
-	rr := mock.NewRows([]string{"author_id", "first_name", "last_name"}).
+	rows := mock.NewRows([]string{"author_id", "first_name", "last_name"}).
 		AddRow(1, "post1", "hello").
 		AddRow(2, "post2", "world")
-	mock.ExpectQuery("^SELECT author_id,first_name,last_name FROM authors$").WillReturnRows(rr)
+	mock.ExpectQuery("^SELECT author_id,first_name,last_name FROM authors$").WillReturnRows(rows)
 
 	user, err := repo.List(context.Background())
 	assert.NotNil(t, user)
 	assert.NoError(t, err)
 
-	// we make sure that all expectations were met
-	if errx := mock.ExpectationsWereMet(); err != nil {
-		t.Errorf("there were unfulfilled expectations: %s", errx)
+	// ExpectationsWereMet checks whether all queued expectations were met in order.
+	if errExpectation := mock.ExpectationsWereMet(); err != nil {
+		t.Errorf("there were unfulfilled expectations: %s", errExpectation)
 	}
 }

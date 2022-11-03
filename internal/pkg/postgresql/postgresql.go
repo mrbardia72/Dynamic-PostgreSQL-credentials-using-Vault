@@ -24,6 +24,5 @@ func GetPostgresqlConfig() *sql.DB {
 		panic(err)
 	}
 
-	fmt.Printf("Connected to PostgreSQL db using user <%s> and password <%s>\n", config.User, config.Password)
 	return db
 }
