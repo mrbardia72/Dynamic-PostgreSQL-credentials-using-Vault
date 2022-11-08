@@ -3,6 +3,7 @@ package vault
 import (
 	vault "github.com/mittwald/vaultgo"
 	"github.com/nasermirzaei89/env"
+	"github.com/pkg/errors"
 	"strconv"
 )
 
@@ -23,10 +24,7 @@ type VaultCred struct {
 
 //GetVaultConfig Read (generate) credentials from our Vault server.
 func GetVaultConfig() DbConnection {
-	client, errVault := vault.NewClient(env.MustGetString("VAULT_HOST")+env.MustGetString("VAULT_PORT"), vault.WithCaPath(""), vault.WithAuthToken(env.MustGetString("VAULT_TOKEN")))
-	if errVault != nil {
-		panic(errVault)
-	}
+	client := initVault()
 
 	key := []string{"v1", "database", "creds", env.MustGetString("VAULT_ROLE")}
 	options := &vault.RequestOptions{}
@@ -49,4 +47,13 @@ func GetVaultConfig() DbConnection {
 		User:     response.Data.User,
 		Password: response.Data.Password,
 	}
+}
+
+//initVault  returns a vault configuration for the client. It is safe to modify the return value of this function.
+func initVault() *vault.Client {
+	client, err := vault.NewClient(env.MustGetString("VAULT_HOST")+env.MustGetString("VAULT_PORT"), vault.WithCaPath(""), vault.WithAuthToken(env.MustGetString("VAULT_TOKEN")))
+	if err != nil {
+		panic(errors.Wrap(err, "error return config vault"))
+	}
+	return client
 }

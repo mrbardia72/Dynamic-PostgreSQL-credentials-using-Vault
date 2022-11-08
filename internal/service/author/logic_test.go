@@ -1,3 +1,5 @@
+//go:build author_logic_test
+
 package author_test
 
 import (
