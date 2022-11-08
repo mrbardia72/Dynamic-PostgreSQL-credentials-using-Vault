@@ -8,6 +8,10 @@ help: ## Shows help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 .DEFAULT_GOAL := help
 
+.PHONY: build-app
+build-app:
+	CGO_ENABLED=1 go build -v -o $(ROOT)/bin/main -ldflags="-s -w" $(ROOT)/cmd/api/*.go
+
 .PHONY: up-pgsql
 up-pgsql: ## docker-compose -f deploy/postgres.yml up
 	docker-compose -f deploy/postgres.yml up
@@ -50,3 +54,8 @@ cm: ## 🌱 git commit
 	git add .
 	git commit -m "$(branch)-${LOGFILE}"
 	git push origin $(branch)
+
+.PHONY: test-flag
+test-flag: ## test with flags
+	go test -tags=author_logic_test -bench=. -benchmem -v -cover ./...
+	go test -tags=sql_mock_author -bench=. -benchmem -v -cover ./...

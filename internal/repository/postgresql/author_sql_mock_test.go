@@ -1,3 +1,5 @@
+//go:build sql_mock_author
+
 package postgresql
 
 import (
