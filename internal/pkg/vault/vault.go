@@ -55,5 +55,6 @@ func initVault() *vault.Client {
 	if err != nil {
 		panic(errors.Wrap(err, "error return config vault"))
 	}
+
 	return client
 }

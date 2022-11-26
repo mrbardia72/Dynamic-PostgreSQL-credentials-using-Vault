@@ -12,22 +12,6 @@ help: ## Shows help
 build-app:
 	CGO_ENABLED=1 go build -v -o $(ROOT)/bin/main -ldflags="-s -w" $(ROOT)/cmd/api/*.go
 
-.PHONY: up-pgsql
-up-pgsql: ## docker-compose -f deploy/postgres.yml up
-	docker-compose -f deploy/postgres.yml up
-
-.PHONY: dn-pgsql
-dn-pgsql: ## docker-compose -f deploy/postgres.yml down
-	docker-compose -f deploy/postgres.yml down
-
-.PHONY: up-vault
-up-vault: ## docker-compose -f deploy/vault.yml up
-	docker-compose -f deploy/vault.yml up
-
-.PHONY: dn-vault
-dn-vault: ## docker-compose -f deploy/vault.yml down
-	docker-compose -f deploy/vault.yml down
-
 .which-go:
 	@which go > /dev/null || (echo "install go from https://golang.org/dl/" & exit 1)
 
@@ -47,7 +31,6 @@ clean: # run make format and make lint
 .PHONY: test
 test: .which-go ## Tests go files
 	CGO_ENABLED=1 go test -race -coverprofile=coverage.txt -covermode=atomic $(ROOT)/... -v
-
 
 .PHONY: cm
 cm: ## 🌱 git commit

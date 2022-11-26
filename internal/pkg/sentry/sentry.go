@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func initSentry() {
+func initSentry() { //nolint:deadcode
 	//nolint:exhaustivestruct
 	err := sentry.Init(sentry.ClientOptions{
 		Dsn:         env.GetString("SENTRY_DSN", "https://41bd81d832a8486f995b8d694c143cd5@o1211294.ingest.sentry.io/6347462"),

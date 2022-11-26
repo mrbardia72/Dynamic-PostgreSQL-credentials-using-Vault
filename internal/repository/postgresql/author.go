@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	queryList = `SELECT author_id,first_name,last_name FROM authors`
+	queryList   = `SELECT id,name FROM authors`
+	queryInsert = `INSERT INTO authors (name) VALUES ($1) RETURNING id;`
 )
 
 type authorRepo struct {
@@ -49,7 +50,7 @@ func (repo *authorRepo) List(ctx context.Context) ([]author.Entity, error) {
 	for rows.Next() {
 		var p author.Entity
 
-		if errScan := rows.Scan(&p.ID, &p.FirstName, &p.LastName); errScan != nil {
+		if errScan := rows.Scan(&p.ID, &p.Name); errScan != nil {
 			return nil, errors.Wrap(errScan, "error on query List scan row")
 		}
 
@@ -57,4 +58,17 @@ func (repo *authorRepo) List(ctx context.Context) ([]author.Entity, error) {
 	}
 
 	return actuators, nil
+}
+
+func (repo *authorRepo) Insert(ctx context.Context, m author.Entity) (id int, err error) {
+	var idAuthor int
+
+	args := []interface{}{m.Name}
+
+	err = repo.db.QueryRowContext(ctx, queryInsert, args...).Scan(&idAuthor)
+	if err != nil {
+		return 0, errors.Wrap(err, "error on exec context for query insert")
+	}
+
+	return idAuthor, nil
 }

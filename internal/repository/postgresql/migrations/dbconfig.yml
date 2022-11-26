@@ -1,0 +1,5 @@
+development:
+  dialect: postgres
+  datasource: host=127.0.0.1 user=bardia password=bardiapw dbname=bardiadb sslmode=disable
+  dir: .
+  table: migrations
