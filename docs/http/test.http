@@ -1,4 +1,4 @@
 ### List Authors
 
-GET {{baseUrl}}/authors
+GET 127.0.0.1:4030/authors
 

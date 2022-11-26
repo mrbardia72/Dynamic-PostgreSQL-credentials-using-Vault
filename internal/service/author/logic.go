@@ -23,3 +23,16 @@ func (svc *service) ListAuthors(ctx context.Context) ([]Entity, error) {
 
 	return res, nil
 }
+
+func (svc *service) CreateAuthor(ctx context.Context, req CreateAuthorRequest) (id int, err error) {
+	m := Entity{
+		Name: req.Name,
+	}
+
+	idAuthor, err := svc.repo.Insert(ctx, m)
+	if err != nil {
+		return 0, errors.Wrap(err, "error on create authors")
+	}
+
+	return idAuthor, nil
+}

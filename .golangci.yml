@@ -6,12 +6,8 @@ run:
 linters:
   enable-all: true
   disable:
-#     - varnamelen
-#     - nilnil
     - maintidx
     - ireturn
-#    - errname
-#    - errchkjson
     - contextcheck
     - lll
     - goerr113
@@ -42,3 +38,4 @@ linters:
     - staticcheck
     - ineffassign
     - wastedassign
+    - varnamelen

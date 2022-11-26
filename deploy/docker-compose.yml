@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  postgres_app:
+    image: postgres:${POSTGRES_TAG_IMAGE}
+    container_name: psg_demo
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - psg:/var/lib/postgresql/data
+  pgadmin_app:
+    image: dpage/pgadmin4:${PGADMIN_TAG_IMAGE}
+    container_name: pgadmin_demo
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    depends_on:
+      - postgres_app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./pgadmin/data:/var/lib/pgadmin
+  vault_app:
+    build:
+      context: ./vault
+      dockerfile: Dockerfile
+    container_name: vault_demo
+    volumes:
+      - ./vault/config:/vault/config
+      - ./vault/policies:/vault/policies
+      - ./vault/data:/vault/data
+      - ./vault/logs:/vault/logs
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: ${VAULT_TOKEN}
+      VAULT_DEV_LISTEN_ADDRESS: ${VAULT_ADDRESS}
+    ports:
+      - "8200:8200"
+volumes:
+  psg:

@@ -1,17 +1,14 @@
-# Dynamic PostgreSQL credentials using HashiCorp Vault (withGo examples)
+# Dynamic PostgreSQL credentials using HashiCorp Vault (with Go examples)
 
-Basically, have a web application connect to a database (PostgreSQL) using dynamically generated credentials (username & password), that you can rotate whenever you want and it'll all be transparent to your app.
+### Dynamic Secrets
+As mentioned, Vault supports a number of dynamic secret backends for generating secrets dynamically when needed. For example, with the AWS and Google Cloud backends, you can create access credentials based on IAM policies. The Databases backend, meanwhile, generates database credentials based on configured roles.
 
-Vault handles the credentials generation (and thus creating a corresponding username & password in PostgreSQL) and expiration (and thus, removing the username from the DB).
-
-## Vault Initial Setup
-In the output, you'll get the three important information:
-
-The API endpoint (which is the same as the UI URL). If you ran the dev server without any arguments this is probably http://127.0.0.1:8200.
-The unseal token. This is used to unseal and Vault from its sealed state. Whenever Vault is rebooted and/or initialized, it starts in a sealed state so you'll need to unseal it first. We don't have to worry about this because when using dev server, Vault is already initilized and unsealed.
-The root token. The token we'll use to authenticate our requests to the API. This is only a good idea when running a dev server and trying out some stuff, but in the real world the root token is only there for emergencies and for initial setup of users/policies... etc.
-Now that we have a Vault server running, leave that Terminal open and open a new one (or a new Tmux pane or whatever).
-
+### Dynamic Secrets:
+* are generated on demand
+* have limited access based on role
+* are leased for a period of time
+* can be revoked
+* come with an audit trail
 ```shell
 vault server -dev
 ```
